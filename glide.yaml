@@ -1,0 +1,17 @@
+package: github.com/andrepinto/helmsman
+import:
+- package: github.com/codegangsta/cli
+  version: ^1.20.0
+- package: github.com/emicklei/go-restful
+  version: ^2.2.1
+- package: github.com/emicklei/go-restful-swagger12
+  version: ^1.0.1
+- package: github.com/sirupsen/logrus
+  version: ^1.0.3
+- package: gopkg.in/urfave/cli.v1
+  version: ^1.20.0
+- package: k8s.io/helm
+  version: ^2.6.1
+  subpackages:
+  - pkg/chartutil
+  - pkg/repo
