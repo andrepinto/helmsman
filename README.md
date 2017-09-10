@@ -42,7 +42,7 @@ GLOBAL OPTIONS:
 Get Charts
 
 ```console
-http://localhost:8000/charts/index.yaml
+$ curl http://localhost:8000/charts/index.yaml
 
 apiVersion: v1
 entries:
@@ -63,8 +63,8 @@ generated: 2017-09-10T15:51:42.238429632+01:00
 Upload Chart
 
 ```console
-curl -v -T repo.tar.gz -X PUT http://localhost:8000/charts/upload/
-```console
+$ curl -v -T repo.tar.gz -X PUT http://localhost:8000/charts/upload/
+```
 
 ## Build
 
