@@ -1,4 +1,4 @@
-# The Chart Repository
+# Helmsman - The Chart Repository
 
 At a high level, a chart repository is a location where packaged charts can be
 stored and shared.
