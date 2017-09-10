@@ -5,7 +5,6 @@ import (
 	"gopkg.in/urfave/cli.v1"
 	"github.com/andrepinto/helmsman/api"
 	log "github.com/sirupsen/logrus"
-	"fmt"
 	"os"
 	"github.com/andrepinto/helmsman/pkg"
 )
