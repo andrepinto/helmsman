@@ -11,6 +11,7 @@ There are no prerequisites.
 
 **Note:** It is not necessary to have the helm command
 
+## Run
 
 ```console
 $  ./helmsman -h
