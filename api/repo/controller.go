@@ -9,7 +9,6 @@ import (
 	"net/http"
 	"io"
 	"github.com/andrepinto/helmsman/pkg"
-	"path"
 )
 
 
@@ -62,7 +61,7 @@ func (pr *RepoResource) uploadChartCtrl(request *restful.Request, response *rest
 		return
 	}
 
-	urlNew := path.Join(pr.RepoUrl,id)
+	urlNew := pr.RepoUrl//path.Join(pr.RepoUrl,id)
 	if err != nil {
 		response.AddHeader("Content-Type", "text/plain")
 		response.WriteErrorString(http.StatusInternalServerError, "500: Charts error.")
