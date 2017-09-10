@@ -21,7 +21,6 @@ func NewCliApp() *cli.App {
 	opts.AddFlags(app)
 
 
-	fmt.Println(opts)
 	app.Action = func(c *cli.Context) error {
 
 		if opts.Debug{
