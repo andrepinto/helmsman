@@ -1,7 +1,7 @@
 build:
-    go build -o helmsman cmd/server/main.go
+	go build -o helmsman cmd/server/main.go
 
 dep:
-    glide install
+	glide install
 
 .PHONY: build dep
