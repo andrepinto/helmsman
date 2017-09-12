@@ -11,6 +11,12 @@ There are no prerequisites.
 
 **Note:** It is not necessary to have the helm command
 
+## Docker
+
+```console
+docker run -p 8000:8000 -e HELMSMAN_REPO_URL=127.0.0.1:8000 -v /home/ubuntu/charts:/app/charts andrepinto/helmsman
+```
+
 ## Run
 
 ```console

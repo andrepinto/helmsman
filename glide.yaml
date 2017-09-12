@@ -15,3 +15,4 @@ import:
   subpackages:
   - pkg/chartutil
   - pkg/repo
+- package: golang.org/x/crypto

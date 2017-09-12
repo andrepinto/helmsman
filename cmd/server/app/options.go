@@ -4,6 +4,7 @@ import (
 	"gopkg.in/urfave/cli.v1"
 )
 
+const  REPO_URL = "HELMSMAN_REPO_URL"
 
 type WChestCmdOptions struct {
 	Port int
@@ -36,6 +37,7 @@ func (opts *WChestCmdOptions) AddFlags(app *cli.App){
 			Name:        "repo.url",
 			Value:       "localhost:8000/charts/",
 			Usage:       "helm repo url",
+			EnvVar: 	 REPO_URL,
 			Destination: &opts.RepoUrl,
 		},
 		cli.BoolFlag{

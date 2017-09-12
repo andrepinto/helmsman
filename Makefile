@@ -1,7 +1,11 @@
 build:
-	go build -o helmsman cmd/server/main.go
+	go build -o bin/helmsman cmd/server/main.go
 
 dep:
 	glide install
 
-.PHONY: build dep
+docker:
+	docker run --rm -v $(shell pwd)/bin:/go/src/github.com/andrepinto/helmsman/bin $(shell docker build -f Dockerfile.build --no-cache -q .) go build  -o bin/helmsman cmd/server/main.go
+	docker build -f Dockerfile.dist -t andrepinto/helmsman .
+
+.PHONY: build dep docker

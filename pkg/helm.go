@@ -6,11 +6,12 @@ import (
 	repo "k8s.io/helm/pkg/repo"
 	"k8s.io/helm/pkg/chartutil"
 	"os"
+	"github.com/sirupsen/logrus"
 )
 
 func Index(dir, url, mergeTo string) error {
 	out := filepath.Join(dir, "index.yaml")
-
+	logrus.Debug(out)
 	i, err := repo.IndexDirectory(dir, url)
 	if err != nil {
 		return err
