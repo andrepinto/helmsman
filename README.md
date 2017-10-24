@@ -29,7 +29,7 @@ USAGE:
    helmsman [global options] command [command options] [arguments...]
 
 VERSION:
-   1.0.0
+   1.1.0
 
 COMMANDS:
      help, h  Shows a list of commands or help for one command
@@ -37,6 +37,7 @@ COMMANDS:
 GLOBAL OPTIONS:
    --debug           Debug mode default to false
    --port value      server port (default: 8000)
+   --env value       (default: "stable")
    --repo.dir value  helm repo dir (default: "./charts")
    --repo.url value  helm repo url (default: "localhost:8000/charts/")
    --help, -h        show help
@@ -48,8 +49,9 @@ GLOBAL OPTIONS:
 
 Get Charts
 
+
 ```console
-$ curl http://localhost:8000/charts/index.yaml
+$ curl http://localhost:8000/stable/charts/index.yaml
 
 apiVersion: v1
 entries:
