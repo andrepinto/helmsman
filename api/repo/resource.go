@@ -9,22 +9,25 @@ type RepoResourceOptions struct {
 	RepoUrl string
 }
 
+//RepoResource ...
 type RepoResource struct {
 	RepoDir string
 	RepoUrl string
 }
 
-func NewRepoResource(options *RepoResourceOptions) *RepoResource{
+//NewRepoResource ...
+func NewRepoResource(options *RepoResourceOptions) *RepoResource {
 	return &RepoResource{
 		RepoDir: options.RepoDir,
 		RepoUrl: options.RepoUrl,
 	}
 }
 
-func (pr *RepoResource) Register(container *restful.Container){
+//Register ...
+func (pr *RepoResource) Register(container *restful.Container) {
 	ws := new(restful.WebService)
 	ws.
-	Path("/charts").
+		Path("/envs/{env}/charts").
 		Doc("Manage charts").
 		Consumes(restful.MIME_XML, restful.MIME_JSON, restful.MIME_OCTET).
 		Produces(restful.MIME_JSON, restful.MIME_XML)
@@ -38,7 +41,6 @@ func (pr *RepoResource) Register(container *restful.Container){
 		Doc("upload a chart").
 		Operation("uploadChartCtrl").
 		Param(ws.PathParameter("chart", "identifier of the chart file").DataType("string")))
-
 
 	container.Add(ws)
 }

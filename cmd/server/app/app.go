@@ -1,14 +1,17 @@
 package app
 
 import (
-	"sort"
-	"gopkg.in/urfave/cli.v1"
-	"github.com/andrepinto/helmsman/api"
-	log "github.com/sirupsen/logrus"
 	"os"
+	"path/filepath"
+	"sort"
+
+	"github.com/andrepinto/helmsman/api"
 	"github.com/andrepinto/helmsman/pkg"
+	log "github.com/sirupsen/logrus"
+	"gopkg.in/urfave/cli.v1"
 )
 
+//NewCliApp ...
 func NewCliApp() *cli.App {
 
 	app := cli.NewApp()
@@ -16,25 +19,26 @@ func NewCliApp() *cli.App {
 	app.Name = "helmsman"
 	app.Version = VERSION
 
-	opts := NewWChestCmdOptions()
+	opts := NewHemlCmdOptionsCmdOptions()
 	opts.AddFlags(app)
-
 
 	app.Action = func(c *cli.Context) error {
 
-		if opts.Debug{
+		if opts.Debug {
 			log.SetLevel(log.DebugLevel)
-		}else{
+		} else {
 			log.SetLevel(log.InfoLevel)
 		}
 
+		opts.Envs = c.StringSlice("env")
+
 		err := Init(opts)
-		if err != nil{
+		if err != nil {
 			log.Fatal(err)
 		}
 
-		proc := api.NewApiServer(&api.ApiServerOptions{
-			Port: opts.Port,
+		proc := api.NewServer(&api.ServerOptions{
+			Port:    opts.Port,
 			RepoDir: opts.RepoDir,
 			RepoUrl: opts.RepoUrl,
 		})
@@ -48,14 +52,25 @@ func NewCliApp() *cli.App {
 	return app
 }
 
+//Init ...
+func Init(opts *HemlCmdOptions) error {
 
-func Init(opts *WChestCmdOptions) error{
-	err := os.MkdirAll(opts.RepoDir, 0777)
-	if err != nil {
-		return err
+	log.Info(opts.Envs)
+
+	for _, env := range opts.Envs {
+		folder := filepath.Join(opts.RepoDir, env)
+		err := os.MkdirAll(folder, 0777)
+		if err != nil {
+			return err
+		}
+
+		err = pkg.Index(folder, folder, "")
+		if err != nil {
+			return err
+		}
+
 	}
 
-	err = pkg.Index(opts.RepoDir, opts.RepoDir, "")
+	return nil
 
-	return err
 }

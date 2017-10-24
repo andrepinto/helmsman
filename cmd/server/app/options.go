@@ -4,21 +4,24 @@ import (
 	"gopkg.in/urfave/cli.v1"
 )
 
-const  REPO_URL = "HELMSMAN_REPO_URL"
+const repoURL = "HELMSMAN_REPO_URL"
 
-type WChestCmdOptions struct {
-	Port int
+//HemlCmdOptions ...
+type HemlCmdOptions struct {
+	Port    int
 	RepoDir string
 	RepoUrl string
-	Debug bool
+	Debug   bool
+	Envs    []string
 }
 
-func NewWChestCmdOptions() *WChestCmdOptions{
-	return &WChestCmdOptions{
-	}
+//NewHemlCmdOptionsCmdOptions ...
+func NewHemlCmdOptionsCmdOptions() *HemlCmdOptions {
+	return &HemlCmdOptions{}
 }
 
-func (opts *WChestCmdOptions) AddFlags(app *cli.App){
+//AddFlags ...
+func (opts *HemlCmdOptions) AddFlags(app *cli.App) {
 
 	flags := []cli.Flag{
 		cli.IntFlag{
@@ -37,7 +40,7 @@ func (opts *WChestCmdOptions) AddFlags(app *cli.App){
 			Name:        "repo.url",
 			Value:       "localhost:8000/charts/",
 			Usage:       "helm repo url",
-			EnvVar: 	 REPO_URL,
+			EnvVar:      repoURL,
 			Destination: &opts.RepoUrl,
 		},
 		cli.BoolFlag{
@@ -45,7 +48,10 @@ func (opts *WChestCmdOptions) AddFlags(app *cli.App){
 			Usage:       "Debug mode default to false",
 			Destination: &opts.Debug,
 		},
-
+		cli.StringSliceFlag{
+			Name:  "env",
+			Value: &cli.StringSlice{"stable"},
+		},
 	}
 
 	app.Flags = append(app.Flags, flags...)

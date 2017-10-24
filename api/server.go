@@ -1,58 +1,66 @@
 package api
 
 import (
-	log "github.com/sirupsen/logrus"
 	"github.com/emicklei/go-restful"
+	log "github.com/sirupsen/logrus"
 
 	"fmt"
 	"net/http"
+
 	apiRepo "github.com/andrepinto/helmsman/api/repo"
 	"github.com/emicklei/go-restful-swagger12"
 )
 
-type ApiServerOptions struct {
-	Port int
+//ServerOptions ...
+type ServerOptions struct {
+	Port    int
 	RepoDir string
 	RepoUrl string
 }
 
-type ApiServer struct {
-	Port int
-	ApiServerRepo *ApiServerRepo
+//Server ...
+type Server struct {
+	Port       int
+	ServerRepo *ServerRepo
 }
 
-type ApiServerRepo struct {
+//ServerRepo ...
+type ServerRepo struct {
 	RepoDir string
 	RepoUrl string
 }
 
-func NewApiServer(options *ApiServerOptions) *ApiServer{
-	return &ApiServer{
+//NewServer ...
+func NewServer(options *ServerOptions) *Server {
+	return &Server{
 		Port: options.Port,
-		ApiServerRepo: &ApiServerRepo{
+		ServerRepo: &ServerRepo{
 			RepoUrl: options.RepoUrl,
 			RepoDir: options.RepoDir,
 		},
 	}
 }
 
-func (sv *ApiServer) Run() error{
+//Run ...
+func (sv *Server) Run() error {
 
 	log.Debug("Starting Http Server")
 
+	log.Debug(sv.ServerRepo)
+
 	wsContainer := restful.NewContainer()
 
-	repoResource:= apiRepo.NewRepoResource(&apiRepo.RepoResourceOptions{
-		RepoUrl: sv.ApiServerRepo.RepoUrl,
-		RepoDir: sv.ApiServerRepo.RepoDir,
+	repoResource := apiRepo.NewRepoResource(&apiRepo.RepoResourceOptions{
+		RepoUrl: sv.ServerRepo.RepoUrl,
+		RepoDir: sv.ServerRepo.RepoDir,
 	})
 
 	repoResource.Register(wsContainer)
 
 	config := swagger.Config{
-		WebServices:    wsContainer.RegisteredWebServices(),
-		WebServicesUrl: fmt.Sprintf("localhost:%d", sv.Port),
-		ApiPath:        "/apidocs.json",
+		WebServices:     wsContainer.RegisteredWebServices(),
+		WebServicesUrl:  fmt.Sprintf("localhost:%d", sv.Port),
+		ApiPath:         "/apidocs.json",
 		SwaggerPath:     "/apidocs/",
 		SwaggerFilePath: "./node_modules/swagger-ui/dist"}
 	swagger.RegisterSwaggerService(config, wsContainer)
@@ -63,5 +71,3 @@ func (sv *ApiServer) Run() error{
 
 	return err
 }
-
-
