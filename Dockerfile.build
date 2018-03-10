@@ -1,10 +1,10 @@
 FROM golang:1.9
 
 RUN apt-get update
-RUN apt-get install curl --yes
+RUN apt-get install --yes curl git make
 
 
-RUN curl https://glide.sh/get | sh
+RUN go get github.com/golang/dep/...
 
 RUN mkdir -p $GOPATH/src/github.com/andrepinto/helmsman
 
@@ -14,4 +14,5 @@ COPY . $GOPATH/src/github.com/andrepinto/helmsman
 
 WORKDIR $GOPATH/src/github.com/andrepinto/helmsman
 
-RUN glide install
+RUN make dep
+RUN make

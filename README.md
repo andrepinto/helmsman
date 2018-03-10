@@ -78,7 +78,7 @@ $ curl -v -T repo.tar.gz -X PUT http://localhost:8000/envs/stable/charts/upload/
 ## Build
 
 ```console
-$  glide install
+$  dep ensure
 ```
 
 ```console
